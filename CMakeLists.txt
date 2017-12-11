@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 11) # C++11 standard
 # Wall: verbose warning
 # Weffc++: warnings based on Scott Meyers Effective c++
 # g: make binary more debuggable
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Weffc++ -g")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -g")
 
 if ($ENV{TRAVIS}) # On Travis-CI add coverage ability and disable optimizations
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -coverage")

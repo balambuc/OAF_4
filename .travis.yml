@@ -14,6 +14,7 @@ before_script:
 
 script:
   - make
+  - ls
   - cd in
   - for i in *; do ../cmake-build-debug/app/app "$i"; done
   - for i in out*; do diff "$i" "../out/$i"; done
