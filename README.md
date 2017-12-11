@@ -1,4 +1,4 @@
-# DEFAULT CLION PROJECT
+# OAF_4
 
 Egy szöveges állományban számlaszám-befizetés párokat tartalmazó sorokat
 helyeztünk el. (A számlaszám 8 karakter hosszú, utána egy szóköz jön, azt követően 

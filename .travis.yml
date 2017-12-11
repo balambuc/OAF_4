@@ -1,0 +1,25 @@
+language: cpp
+
+sudo: false
+
+compiler: gcc
+
+branches:
+  only: master
+
+before_script:
+  - mkdir build
+  - cd build
+  - cmake ..
+
+script: make && make CTEST_OUTPUT_ON_FAILURE=1 test
+
+after_success:
+  - cd ..
+  - gcov src/*.cpp -o build/src/CMakeFiles/src.dir/
+  - bash <(curl -s https://codecov.io/bash) -X gcov
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
