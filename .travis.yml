@@ -14,10 +14,10 @@ before_script:
 
 script:
   - make
-  - ls
-  - cd in
-  - for i in *; do ../cmake-build-debug/app/app "$i"; done
+  - cd ../in
+  - for i in *; do build/app/app "$i"; done
   - for i in out*; do diff "$i" "../out/$i"; done
+  - cd ../build
 
 
 after_success:
