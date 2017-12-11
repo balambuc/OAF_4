@@ -16,7 +16,7 @@ struct Transaction{
 class SumAcc : public Summation<Transaction> {
 private:
     void init() override {}
-    void add(const Transaction& e) override {  _result->bal += e.bal;}
+    void add(const Transaction& e) override {  _result->bal += e.bal; std::cout << e << endl;}
     bool whileCond(const Transaction& e) const override { return e.acc == _result->acc; }
 
 public:
