@@ -1,5 +1,4 @@
 #include <iostream>
-#include <utility>
 #include <vector>
 #include <fstream>
 #include "../src/seqinfileenumerator.hpp"
@@ -24,7 +23,7 @@ struct Transaction {
 class SumAcc : public Summation<Transaction> {
 private:
     void init() override {}
-    void add(const Transaction& e) override { _result->bal += e.bal; }
+    void add(const Transaction& e) override { _result->bal += e.bal; std::cout << e << std::endl;}
     bool whileCond(const Transaction& e) const override { return e.acc == _result->acc; }
 
 public:
@@ -62,7 +61,7 @@ public:
 class mySum : public Summation<Transaction, std::ofstream> {
 private:
     void init() override {}
-    void add(const Transaction& e) override { *_result << e << std::endl; }
+    void add(const Transaction& e) override { *_result << e << std::endl; std::cout << e << std::endl;}
 public:
     explicit mySum(std::ofstream& ofile) : Summation<Transaction, std::ofstream>(&ofile) {}
 };
