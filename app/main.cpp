@@ -7,7 +7,7 @@
 struct Transaction{
     std::string acc;
     int bal;
-    Transaction(std::string a, int b) : acc{a}, bal{b} { }
+    Transaction(std::string a, int b) : acc{std::move(a)}, bal{b} { }
     Transaction() : Transaction{"", 0} { }
     friend std::istream& operator>>(std::istream& is, Transaction& ts) { is >> ts.acc >> ts.bal; return is;}
     friend std::ostream& operator<<(std::ostream& os, const Transaction& ts) { os << ts.acc << " " << ts.bal; return os;}
@@ -69,8 +69,12 @@ int main(int argc, char** argv) {
         cin >> infile;
     }
     myEnor enor(infile);
+
     ofstream of;
-    of.open((infile + "_out.txt").c_str());
+    string outfile = infile;
+    outfile.replace(0,2,"out");
+    of.open(outfile.c_str());
+
     mySum write(of);
     write.addEnumerator(&enor);
     write.run();

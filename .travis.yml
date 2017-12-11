@@ -12,10 +12,15 @@ before_script:
   - cd build
   - cmake ..
 
-script: make && make CTEST_OUTPUT_ON_FAILURE=1 test
+script:
+  - make
+  - cd in
+  - for i in *; do ../cmake-build-debug/app/app "$i"; done
+  - for i in out*; do diff "$i" "../out/$i"; done
+
 
 after_success:
-  - cd ..
+  - cd ../..
   - gcov src/*.cpp -o build/src/CMakeFiles/src.dir/
   - bash <(curl -s https://codecov.io/bash) -X gcov
 
