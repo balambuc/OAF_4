@@ -7,7 +7,7 @@
 struct Transaction{
     std::string acc;
     int bal;
-    Transaction(std::string a, int b) : acc{std::move(a)}, bal{b} { }
+    Transaction(const std::string& a, int b) : acc{a}, bal{b} { }
     Transaction() : Transaction{"", 0} { }
     friend std::istream& operator>>(std::istream& is, Transaction& ts) { is >> ts.acc >> ts.bal; return is;}
     friend std::ostream& operator<<(std::ostream& os, const Transaction& ts) { os << ts.acc << " " << ts.bal; return os;}
@@ -16,7 +16,7 @@ struct Transaction{
 class SumAcc : public Summation<Transaction> {
 private:
     void init() override {}
-    void add(const Transaction& e) override {  _result->bal += e.bal; std::cout << e << endl;}
+    void add(const Transaction& e) override {  _result->bal += e.bal; std::cout << e << std::endl;}
     bool whileCond(const Transaction& e) const override { return e.acc == _result->acc; }
 
 public:
