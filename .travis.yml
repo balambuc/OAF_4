@@ -17,8 +17,6 @@ script:
   - cd app
   - for i in {1..5}; do echo "../../in/in$i.txt ../../in/out$i.txt" | ./app ; done
   - for i in {1..5}; do diff "../../sampleout/out$i.txt" "../../in/out$i.txt" ; done
-  - cd ..
-
 
 notifications:
   email:
