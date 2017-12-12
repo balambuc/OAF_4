@@ -23,11 +23,11 @@ struct Transaction {
 class SumAcc : public Summation<Transaction> {
 private:
     void init() override {}
-    void add(const Transaction& e) override { _result->bal += e.bal; std::cout << e << std::endl;}
+    void add(const Transaction& e) override { _result->bal += e.bal;}
     bool whileCond(const Transaction& e) const override { return e.acc == _result->acc; }
 
 public:
-    explicit SumAcc(Transaction&& ts) : Summation<Transaction>(&ts) {}
+    explicit SumAcc(Transaction& ts) : Summation<Transaction>(&ts) {}
 };
 
 class myEnor : public Enumerator<Transaction> {
@@ -48,10 +48,10 @@ public:
         _end = _enor->end();
         if (!_end)
         {
-            SumAcc sa(_enor->current());
+            _current = _enor->current();
+            SumAcc sa(_current);
             sa.addEnumerator(_enor);
             sa.run();
-            _current = sa.result();
         }
     }
     bool end() const override { return _end; }
@@ -61,26 +61,28 @@ public:
 class mySum : public Summation<Transaction, std::ofstream> {
 private:
     void init() override {}
-    void add(const Transaction& e) override { *_result << e << std::endl; std::cout << e << std::endl;}
+    void add(const Transaction& e) override { *_result << e << std::endl;}
 public:
     explicit mySum(std::ofstream& ofile) : Summation<Transaction, std::ofstream>(&ofile) {}
 };
 
+
 using namespace std;
 
 int main(int argc, char** argv) {
-    string infile;
-    if (argc > 1) infile = argv[1];
+    string infile, outfile;
+    if (argc == 2) infile = argv[1];
+    else if (argc == 3) outfile = argv[2];
     else
     {
-        cout << "Fájlnév: ";
+        cout << "Bemeneti fajlnev: ";
         cin >> infile;
+        cout << "Kimeneti fajlnev: ";
+        cin >> outfile;
     }
     myEnor enor(infile);
 
     ofstream of;
-    string outfile = infile;
-    outfile.replace(0, 2, "out");
     of.open(outfile.c_str());
 
     mySum write(of);
