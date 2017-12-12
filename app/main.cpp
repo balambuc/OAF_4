@@ -4,7 +4,11 @@
 #include "../src/seqinfileenumerator.hpp"
 #include "../src/summation.hpp"
 
-
+/**
+ * Tranzakció típus
+ * acc (string) - számlaszám
+ * bal (string) - befizetés/egyenleg
+ */
 struct Transaction {
     std::string acc;
     int bal;
@@ -20,6 +24,10 @@ struct Transaction {
     }
 };
 
+/**
+ * Belső összegzés
+ * addig összegez amíg az adott tranzakció számlaszáma megegyezik
+ */
 class SumAcc : public Summation<Transaction> {
 private:
     void init() override {}
@@ -30,6 +38,10 @@ public:
     explicit SumAcc(Transaction& ts) : Summation<Transaction>(&ts) {}
 };
 
+/**
+ * Külső felsoroló
+ * felsorolja az összegzett számlákat
+ */
 class myEnor : public Enumerator<Transaction> {
 private:
     SeqInFileEnumerator<Transaction>* _enor;
@@ -58,12 +70,16 @@ public:
     Transaction current() const override { return _current; }
 };
 
+/**
+ * Külső összegzés
+ * kiírja outfileba a számlákat
+ */
 class mySum : public Summation<Transaction, std::ofstream> {
 private:
     void init() override {}
     void add(const Transaction& e) override { *_result << e << std::endl;}
 public:
-    explicit mySum(std::ofstream& ofile) : Summation<Transaction, std::ofstream>(&ofile) {}
+    explicit mySum(std::ofstream& outFile) : Summation<Transaction, std::ofstream>(&outFile) {}
 };
 
 
