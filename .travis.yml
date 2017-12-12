@@ -15,7 +15,7 @@ before_script:
 script:
   - make
   - cd /build/app
-  - for i in {1..5}; do echo "../../in/in$i.txt" "../../in/out$i.txt"; done
+  - for i in {1..5}; do ./app "../../in/in$i.txt" "../../in/out$i.txt"; done
   - cd ..
 
 
