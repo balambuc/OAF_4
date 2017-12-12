@@ -71,15 +71,10 @@ using namespace std;
 
 int main(int argc, char** argv) {
     string infile, outfile;
-    if (argc == 2) infile = argv[1];
-    else if (argc == 3) outfile = argv[2];
-    else
-    {
-        cout << "Bemeneti fajlnev: ";
-        cin >> infile;
-        cout << "Kimeneti fajlnev: ";
-        cin >> outfile;
-    }
+    cout << "Bemeneti fajlnev: ";
+    cin >> infile;
+    cout << "Kimeneti fajlnev: ";
+    cin >> outfile;
     myEnor enor(infile);
 
     ofstream of;
