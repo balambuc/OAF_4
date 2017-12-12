@@ -1,0 +1,30 @@
+language: cpp
+
+sudo: false
+
+compiler: gcc
+
+branches:
+  only: master
+
+before_script:
+  - mkdir build
+  - cd build
+  - cmake ..
+
+script:
+  - make
+  - cd /build/app
+  - for i in {1..5}; do echo "../../in/in$i.txt" "../../in/out$i.txt"; done
+  - cd ..
+
+
+after_success:
+  - cd ../..
+  - gcov *.cpp -o build/src/CMakeFiles/
+  - bash <(curl -s https://codecov.io/bash) -X gcov
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
