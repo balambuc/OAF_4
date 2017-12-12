@@ -1,4 +1,0 @@
-ignore:
-  - "*/unit_tests"
-  - "*/headers"
-  - "**/*.h"
