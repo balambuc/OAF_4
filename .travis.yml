@@ -20,11 +20,6 @@ script:
   - cd ..
 
 
-after_success:
-  - cd ../..
-  - gcov *.cpp -o build/src/CMakeFiles/
-  - bash <(curl -s https://codecov.io/bash) -X gcov
-
 notifications:
   email:
     on_success: change
