@@ -12,8 +12,10 @@
 struct Transaction {
     std::string acc;
     int bal;
+
     Transaction(std::string a, int b) : acc{std::move(a)}, bal{b} {}
     Transaction() : Transaction{"", 0} {}
+
     friend std::istream& operator>>(std::istream& is, Transaction& ts) {
         is >> ts.acc >> ts.bal;
         return is;
@@ -33,7 +35,6 @@ private:
     void init() override {}
     void add(const Transaction& e) override { _result->bal += e.bal;}
     bool whileCond(const Transaction& e) const override { return e.acc == _result->acc; }
-
 public:
     explicit SumAcc(Transaction& ts) : Summation<Transaction>(&ts) {}
 };
@@ -45,7 +46,6 @@ public:
 class myEnor : public Enumerator<Transaction> {
 private:
     SeqInFileEnumerator<Transaction>* _enor;
-
     Transaction _current;
     bool _end;
 public:
